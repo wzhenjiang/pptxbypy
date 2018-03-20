@@ -23,6 +23,7 @@ from pptx.enum.dml import MSO_THEME_COLOR
 # define page content area size 1 inch is 2.54 cm or 79 Pts
 CONTENT_AREA_WIDTH = Cm(30)     # 12 inches
 CONTENT_AREA_HEIGHT = Cm(15)     # 6 inches 
+CONTENT_AREA_MARGIN = Cm(1)     # leave margin space
 
 # define layout index from slidemaster count
 COVER_PAGE_LAYOUT = 0
@@ -42,8 +43,8 @@ SCHEDULE_LINE_WIDTH = Pt(1)
 def create_schedule_frame(slide,pos,start,end,title):
     ''' this fucntion add schedule shapes
     '''
-    left = Inches(pos[0])
-    top = Inches(pos[1])
+    left = pos[0]
+    top = pos[1]
     shapes = slide.shapes
     for x in range(start,end+1):
         print("Generating",x,"blocks...")
@@ -54,8 +55,8 @@ def create_schedule_frame(slide,pos,start,end,title):
         line = shape.line
         line.color.rgb = SCHEDULE_LINE_COLOR
         line.width = SCHEDULE_LINE_WIDTH
-        shape.text = title + str(x)
-        left += CHEVRON_WIDTH
+        shape.text = title + '%02d' % x
+        left = left + CHEVRON_WIDTH
 
 
 if __name__ == '__main__':
@@ -67,5 +68,5 @@ if __name__ == '__main__':
     prs = Presentation('template.pptx')
     slide_layout = prs.slide_layouts[SCHEDULE_LAYOUT]
     slide = prs.slides.add_slide(slide_layout)
-    create_schedule_frame(slide,[1,1],2,10,'P')
+    create_schedule_frame(slide,[Cm(1),Cm(3)],2,10,'P')
     prs.save('schedule.pptx')
