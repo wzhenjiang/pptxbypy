@@ -2,13 +2,14 @@
 
 # example file for powerpoint slides generation
 from pptx import Presentation
-from pptx.util import Inches
+from pptx.util import Pt
+from pptx.util import Inches                # import Inches as it is most common
+from pptx.util import Cm                    # import Cm as it is what used in powerpoint windows
+from pptx.dml.color import RGBColor         # import color for color definition
+from pptx.enum.shapes import MSO_SHAPE      # import auto shape for shape operation
 
 # more modules as reference below
-from pptx.util import Pt
-from pptx.dml.color import RGBColor
 from pptx.enum.dml import MSO_THEME_COLOR
-from pptx.enum.shapes import MSO_SHAPE
 # chart data related
 # from pptx.chart.data import ChartData
 # from pptx.enum.chart import XL_TICK_MARK
@@ -18,17 +19,25 @@ from pptx.enum.shapes import MSO_SHAPE
 # from pptx.enum.chart import XL_MARKER_STYLE
 
 # define variables
+
+# define page content area size 1 inch is 2.54 cm or 79 Pts
+CONTENT_AREA_WIDTH = Cm(30)     # 12 inches
+CONTENT_AREA_HEIGHT = Cm(15)     # 6 inches 
+
+# define layout index from slidemaster count
 COVER_PAGE_LAYOUT = 0
 DELIVERY_PAGE_LAYOUT = 1
 CONTENT_PAGE_LAYOUT = 2
 SCHEDULE_LAYOUT = 2
 
-CHEVRON_WIDTH = Inches(0.8)
-CHEVRON_HEIGHT = Inches(0.3)
+# define chevron shape size
+CHEVRON_WIDTH = Cm(2)
+CHEVRON_HEIGHT = Cm(0.6)
 
+# define CHERON shape color for schedule geeration
 SCHEDULE_FILL_COLOR = RGBColor(0,0,128)
 SCHEDULE_LINE_COLOR = RGBColor(200,200,200)
-SCHEDULE_LINE_WIDTH = Pt(2)
+SCHEDULE_LINE_WIDTH = Pt(1)
 
 def create_schedule_frame(slide,pos,start,end,title):
     ''' this fucntion add schedule shapes
